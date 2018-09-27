@@ -69,9 +69,9 @@ def main():
     X = population_training_df.T
     Y = population_testing_df.T
 
-    print(X.shape)
+    print(X.head())
     print(Y.shape)
-    
+    """
    # returns prediction and error values of the last iteration
     model, prediction, error = lasso_reg(alphas, X, Y)
     
@@ -91,7 +91,7 @@ def main():
     plt.ylabel("mean square error")
     plt.savefig("alpha_vs_pred")
     plt.show()
-    
+    """
 if __name__ == "__main__":
     main()
     
