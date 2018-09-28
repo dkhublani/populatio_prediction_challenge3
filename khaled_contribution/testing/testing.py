@@ -29,7 +29,7 @@ def lasso_prediction(x, y):
         name ="Fitting for country no.: %s" %(i + 1)
         print(name)
         
-        if x.iloc[0, i] < 1000000:
+        if x.iloc[0, i] < 1000:
         
             alpha = 10
             lasso.set_params(alpha = alpha)
@@ -67,7 +67,7 @@ def lasso_prediction(x, y):
             
             while np.count_nonzero(lasso.coef_) > 5:
                 
-                alpha = alpha + 10000
+                alpha = alpha + 100000
                 lasso.set_params(alpha = alpha)
                 population_vector = x.iloc[:, i]
                 x_i = x.drop([i], axis = 1)
@@ -90,16 +90,18 @@ def lasso_prediction(x, y):
     np.savetxt("population_prediction.csv", preds, delimiter=",") 
     
     
-    return coefs
+    return coefs, preds
     
 
 def main():
     
     population_training_df = pd.read_csv('population_training.csv', encoding='cp1252')
     population_testing_df = pd.read_csv('population_testing.csv', encoding='cp1252')
+    kaggle_file = pd.read_csv('population_sample_kaggle.csv', encoding='cp1252')
     
     population_training_df.drop(['Country Name'], axis=1, inplace=True)
     population_testing_df.drop(['Country Name'], axis=1, inplace=True)
+    
     
     population_training_df = population_training_df.T
     population_training_df = population_training_df.T
@@ -107,12 +109,18 @@ def main():
     X = population_training_df.T
     Y = population_testing_df.T
 
-    print(X.shape)
-    print(Y.shape)
-    
+
     start = timer() 
     
-    coefs = lasso_prediction(X, Y)
+    coefs, preds = lasso_prediction(X, Y)
+    
+    preds_1 = np.transpose(preds)
+    
+    print("\n\n")
+    print(X.shape)
+    print(Y.shape)
+    print(kaggle_file.shape)
+    print(np.shape(preds_1))
     
     timer_end = timer() - start
     print("\n\nTotal elapsed time: " + str(timer_end) + " seconds.")
