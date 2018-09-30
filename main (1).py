@@ -79,7 +79,7 @@ def main():
     model, prediction, error = lasso_reg(alphas, X, Y)
     
     # Graphing for Canada in pred_no_5 file and testing file
-    prediction1=pd.read_csv('pred_no_5.csv', header=None)
+    prediction1=pd.read_csv('pred_no_2.csv', header=None)
     prediction1=prediction1.T
     plt.plot(prediction1.iloc[:,33], Y.iloc[:,33])
     plt.title("True vs. predicted of Canada")
