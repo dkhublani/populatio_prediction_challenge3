@@ -35,7 +35,7 @@ def lasso_pred(x, y):
     prediction = lasso.predict(y)
     error = mse(y_true, prediction)  
     x.iloc[:, i] = population_vector    
-
+    
     for a in alphas:
             
         lasso.set_params(alpha = a)
